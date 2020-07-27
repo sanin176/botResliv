@@ -1,0 +1,37 @@
+version: "3"
+services:
+  springbot:
+    image: springbot
+    container_name: springbot
+    restart: always
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/botdb?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+    ports:
+      - "8080:8080"
+    networks:
+      - spring-mysql
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    image: mysql:latest
+    container_name: mysql
+#    restart: always
+    ports:
+      - "3306:3306"
+    networks:
+      - spring-mysql
+    environment:
+#      - MYSQL_DATABASE=botdb
+#      - MYSQL_ROOT_PASSWORD=root
+#      - MYSQL_DATABASE=ZXC123zxc
+      - MYSQL_ROOT_PASSWORD=ZXC123zxc
+#    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8
+    volumes:
+      - "mysql-data:/var/lib/mysql"
+
+networks:
+  spring-mysql:
+
+volumes:
+  mysql-data:
